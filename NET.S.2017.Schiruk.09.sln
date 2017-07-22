@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library", "Library\Library.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "BookServices\Logic.csproj", "{35BC8973-C20A-495A-984D-C5E642B340D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStorageInterfaces", "BookStorageInterfaces\BookStorageInterfaces.csproj", "{9A51B662-5C8F-4F06-9C46-42C1BDA5E7FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStorage", "BookStorageInterfaces\BookStorage.csproj", "{9A51B662-5C8F-4F06-9C46-42C1BDA5E7FC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTest", "ConsoleTest\ConsoleTest.csproj", "{732929B6-AE40-4DD0-96E8-D7BE186D75CA}"
 EndProject

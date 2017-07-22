@@ -44,9 +44,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BookStorageInterfaces\BookStorageInterfaces.csproj">
+    <ProjectReference Include="..\BookStorageInterfaces\BookStorage.csproj">
       <Project>{9a51b662-5c8f-4f06-9c46-42c1bda5e7fc}</Project>
-      <Name>BookStorageInterfaces</Name>
+      <Name>BookStorage</Name>
     </ProjectReference>
     <ProjectReference Include="..\Library\Library.csproj">
       <Project>{b2fc4101-af50-4812-bb83-4bb66768d106}</Project>

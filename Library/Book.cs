@@ -9,12 +9,14 @@ namespace Library
     /// <summary>
     /// 
     /// </summary>
+    [Serializable]
     public class Book : IEquatable<Book>, IComparable, IComparable<Book>
     {
         private readonly int id;
         private string authorName;
         private string bookName;
         private string country;
+        private int publishedYear;
 
         /// <summary>
         /// Author name
@@ -29,9 +31,9 @@ namespace Library
             }
         }
 
-    /// <summary>
-    /// Country, where book was writen
-    /// </summary>
+        /// <summary>
+        /// Country, where book was writen
+        /// </summary>
         public string Country
         {
             get => country;
@@ -56,7 +58,15 @@ namespace Library
         /// <summary>
         /// When book was first published
         /// </summary>
-        public DateTime PublishedYear { get; set; }
+        public int PublishedYear
+        {
+            get => publishedYear;
+            set
+            {
+                if (value > DateTime.Today.Year || value < -2400) throw new ArgumentException($"{nameof(value)} is invalid!");
+                publishedYear = value;
+            }
+        }
         /// <summary>
         /// Useless ctor
         /// </summary>
@@ -74,7 +84,7 @@ namespace Library
         /// <returns>True if objects are equal, and false otherwise</returns>
         public static bool operator ==(Book lhs, Book rhs)
         {
-            if (ReferenceEquals(lhs, null) || ReferenceEquals(rhs,null)) return false;
+            if (ReferenceEquals(lhs, null) || ReferenceEquals(rhs, null)) return false;
             return lhs.Equals(rhs);
         }
         public static bool operator !=(Book lhs, Book rhs) => !(lhs == rhs);
@@ -88,7 +98,7 @@ namespace Library
             if (ReferenceEquals(other, null)) return false;
             return AuthorName == other.AuthorName && BookName == other.BookName && Country == other.Country && PublishedYear == other.PublishedYear;
         }
-        
+
         public override bool Equals(object obj)
         {
             if ((ReferenceEquals(obj, null)) || typeof(Book) == obj.GetType()) return false;
@@ -101,7 +111,7 @@ namespace Library
         /// <returns>1 if the first is higher, -1 if lower and 0 if equal</returns>
         public int CompareTo(Book other)
             => String.Compare(AuthorName, 0, other.AuthorName, 0, AuthorName.Length < other.AuthorName.Length ? AuthorName.Length : other.AuthorName.Length);
-        
+
         public int CompareTo(object obj)
         {
             if (ReferenceEquals(obj, null) || typeof(Book) == obj.GetType()) throw new ArgumentNullException($"{nameof(obj)} is invalid!");
@@ -109,11 +119,14 @@ namespace Library
         }
 
         public override int GetHashCode() => this.id;
+
         /// <summary>
         /// Owerrided ToString method
         /// </summary>
         /// <returns>String representation</returns>
-        public override string ToString() => $"Book: \"{BookName}\", author: {AuthorName}, year of publishing: {PublishedYear} in {Country}";
-    
-}
+        public override string ToString() => PublishedYear > 0
+            ? $"Book: \"{BookName}\", author: {AuthorName}, year of publishing: {PublishedYear} in {Country}"
+            : $"Book: \"{BookName}\", author: {AuthorName}, year of publishing: {PublishedYear} BC in {Country}";
+
+    }
 }

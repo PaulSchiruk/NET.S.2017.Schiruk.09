@@ -57,9 +57,9 @@
       <Project>{35bc8973-c20a-495a-984d-c5e642b340d5}</Project>
       <Name>Logic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BookStorageInterfaces\BookStorageInterfaces.csproj">
+    <ProjectReference Include="..\BookStorageInterfaces\BookStorage.csproj">
       <Project>{9a51b662-5c8f-4f06-9c46-42c1bda5e7fc}</Project>
-      <Name>BookStorageInterfaces</Name>
+      <Name>BookStorage</Name>
     </ProjectReference>
     <ProjectReference Include="..\Library\Library.csproj">
       <Project>{b2fc4101-af50-4812-bb83-4bb66768d106}</Project>

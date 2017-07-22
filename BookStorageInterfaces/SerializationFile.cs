@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using Library;
 
 namespace BookStorageInterfaces
 {
     /// <summary>
-    /// Class BinFileStorage allows you to write to binary file Book list and read from bin file
+    /// Class SerializationFile allows you to write to binary file Book list and read from din file
     /// </summary>
-    class BinFileStorage : IBookStorage
+    class SerializationFile : IBookStorage
     {
         /// <summary>
         /// The path to the file.
         /// </summary>
         public string Path { get; }
         /// <summary>
-        /// BinFileStorage ctor
+        /// SerializationFile ctor
         /// </summary>
         /// <param name="filePath">The path of the file</param>
-        public BinFileStorage(string filePath)
+        public SerializationFile(string filePath)
         {
             if (string.IsNullOrEmpty(filePath)) throw new ArgumentNullException($"{nameof(filePath)} is null.");
             if (!File.Exists(filePath)) throw new ArgumentNullException($"{nameof(filePath)} does not exist.");
@@ -30,29 +31,20 @@ namespace BookStorageInterfaces
         /// <returns>Returns Book list</returns>
         public List<Book> ReadFromStorage()
         {
+
+            BinaryFormatter formatter = new BinaryFormatter();
             List<Book> bookList = new List<Book>();
 
-            using (BinaryReader reader = new BinaryReader(File.Open(Path, FileMode.Open)))
-            {
-                while (reader.PeekChar() > -1)
-                {
-                    var authorName = reader.ReadString();
-                    var bookName = reader.ReadString();
-                    var country = reader.ReadString();
-                    var publishedYear = reader.ReadInt32();
 
-                    bookList.Add(new Book
-                    {
-                        AuthorName = authorName,
-                        BookName = bookName,
-                        Country = country,
-                        PublishedYear = publishedYear
-                    });
-                }
+            using (FileStream fs = new FileStream(Path, FileMode.OpenOrCreate))
+            {
+                bookList = (List<Book>)formatter.Deserialize(fs);
             }
+
 
             return bookList;
         }
+
         /// <summary>
         /// Write to file list of Books
         /// </summary>
@@ -60,16 +52,11 @@ namespace BookStorageInterfaces
         public void WriteToStorage(List<Book> bookList)
         {
             if (ReferenceEquals(bookList, null)) throw new ArgumentNullException($"{nameof(bookList)} is null.");
-
-            using (BinaryWriter writer = new BinaryWriter(File.Open(Path, FileMode.OpenOrCreate)))
+            
+            BinaryFormatter formatter = new BinaryFormatter();
+            using (FileStream fs = new FileStream(Path, FileMode.OpenOrCreate))
             {
-                foreach (Book b in bookList)
-                {
-                    writer.Write(b.AuthorName);
-                    writer.Write(b.BookName);
-                    writer.Write(b.Country);
-                    writer.Write(b.PublishedYear);
-                }
+                formatter.Serialize(fs, bookList);
             }
         }
     }
